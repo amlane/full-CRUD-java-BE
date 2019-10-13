@@ -19,10 +19,10 @@ public class Menu
     private double price;
 
     // from menu -> restaurant there is a relationship that is
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurantid",
                 nullable = false)
-    @JsonIgnoreProperties("menus")
+    @JsonIgnoreProperties({"menus", "hibernateLazyInitializer"})
     private Restaurant restaurant;
 
     public Menu(String dish, double price, Restaurant restaurant)

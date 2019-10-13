@@ -26,7 +26,8 @@ public class Restaurant
 
     // one restaurant to many menus, connected by restaurantid
     @OneToMany(mappedBy = "restaurant",
-               cascade = CascadeType.ALL)
+               cascade = CascadeType.ALL,
+               orphanRemoval = true)
     @JsonIgnoreProperties("restaurant")
     private List<Menu> menus = new ArrayList<>();
 

@@ -56,9 +56,40 @@ public class RestaurantServiceImpl implements RestaurantService
     @Override
     public Restaurant update(Restaurant restaurant, long id)
     {
-        // send in old and new data
+        Restaurant currentRestaurant = restrepos.findById(id).orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
+        if (restaurant.getName() != null) {
+            currentRestaurant.setName(restaurant.getName());
+        }
 
-        return restrepos.save(restaurant);
+        if (restaurant.getAddress() != null) {
+            currentRestaurant.setAddress(restaurant.getAddress());
+        }
+
+        if (restaurant.getCity() != null)
+        {
+            currentRestaurant.setCity(restaurant.getCity());
+        }
+
+        if(restaurant.getState() != null)
+        {
+            currentRestaurant.setState(restaurant.getState());
+        }
+
+        if(restaurant.getTelephone() != null)
+        {
+            currentRestaurant.setTelephone(restaurant.getTelephone());
+        }
+
+        if(restaurant.getMenus().size() > 0)
+        {
+            for(Menu m : restaurant.getMenus())
+            {
+                currentRestaurant.getMenus().add(new Menu(m.getDish(), m.getPrice(), currentRestaurant));
+            }
+        }
+
+        return restrepos.save(currentRestaurant);
+
     }
 
     @Override
